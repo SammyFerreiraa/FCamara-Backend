@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Book } from "./Book";
 
 @Entity("users")
@@ -13,13 +13,17 @@ export class User {
   email: string
 
   @Column()
+  password: string
+
+  @Column()
   address: string
   
   @Column()
   city: string
 
   @OneToMany(() => Book, (book) => book.user, {
-    eager: true, cascade: true
+    eager: true
   })
+  @JoinColumn()
   books: Book[]
 }
