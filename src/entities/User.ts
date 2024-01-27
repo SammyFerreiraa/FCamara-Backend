@@ -24,6 +24,5 @@ export class User {
   @OneToMany(() => Book, (book) => book.user, {
     eager: true, cascade: true
   })
-  @JoinColumn()
   books: Book[]
 }

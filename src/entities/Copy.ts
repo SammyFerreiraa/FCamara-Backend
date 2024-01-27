@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Book } from "./Book";
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Rental } from "./Rental";
+import { Books } from "./Books";
 
 @Entity('copies')
 export class Copy {
@@ -9,6 +10,9 @@ export class Copy {
   @Column()
   available: boolean
 
-  @ManyToOne(() => Book, (book) => book.copies)
-  book: Book
+  @ManyToOne(() => Books, (books) => books.copies)
+  book: Books
+
+  @OneToMany(() => Rental, (rental) => rental.copy)
+  rentals: Rental
 }

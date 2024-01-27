@@ -1,8 +1,8 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { Copy } from "./Copy";
 
-@Entity('books')
+@Entity('book')
 export class Book {
   @PrimaryGeneratedColumn('uuid')
   id: string
@@ -16,8 +16,8 @@ export class Book {
   @Column()
   isbn: string
 
-  @OneToMany(() => Copy, (copy) => copy.book)
-  copies: Copy[]
+  @OneToOne(() => Copy)
+  copy: Copy
 
   @ManyToOne(() => User, (user) => user.books)
   user: User
