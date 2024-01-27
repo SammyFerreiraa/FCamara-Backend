@@ -8,10 +8,10 @@ export class LoginController {
     const { email, password } = req.body
 
     const userExists = await UserRepository.findOne({ where: { email } }) 
-    if (!userExists) return res.status(400).send('Email or password incorrect')
+    if (!userExists) return res.status(400).json({'message': 'Email or password incorrect'})
     
     const passwordMatch = await bcrypt.compare(password, userExists.password)
-    if (!passwordMatch) return res.status(400).send('Email or password incorrect')
+    if (!passwordMatch) return res.status(400).json({'message': 'Email or password incorrect'})
 
     const token = jwt.sign({ id: userExists.id }, process.env.JWT_PASS as string, { expiresIn: '1d' })
 

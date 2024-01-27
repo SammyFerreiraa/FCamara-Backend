@@ -1,9 +1,9 @@
 Stack: NodeJS, Express, PostgresSQL
 
 ## Requisitos Funcionais
-- [ ] Autenticação JWT
-- [ ] Persistência em banco de dados
-- [ ] Cadastro de pessoa;
+- [X] Autenticação JWT
+- [X] Persistência em banco de dados
+- [X] Cadastro de pessoa;
 - [ ] Cadastro de livro;
 - [ ] Cadastro de copia;
 - [ ] Controle de aluguel;

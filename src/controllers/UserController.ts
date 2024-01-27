@@ -8,7 +8,7 @@ export class UserController {
       const { name, email, address, city, password } = req.body
 
       const userExists = await UserRepository.findOne({ where: { email } })
-      if (userExists) return res.status(400).send('User already exists')
+      if (userExists) return res.status(400).json({'message': 'User already exists'})
 
       const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -21,7 +21,7 @@ export class UserController {
       })
       await UserRepository.save(newUser)
 
-      return res.status(201).send('User created')
+      return res.status(201).json({'message': 'User created'})
     } catch (error) {
       console.log(error)
     }  
