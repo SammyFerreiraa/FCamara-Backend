@@ -22,7 +22,7 @@ export class User {
   city: string
 
   @OneToMany(() => Book, (book) => book.user, {
-    eager: true
+    eager: true, cascade: true
   })
   @JoinColumn()
   books: Book[]
