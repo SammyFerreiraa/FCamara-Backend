@@ -25,5 +25,13 @@ export class UserController {
     } catch (error) {
       console.log(error)
     }  
- }
+  }
+
+    async getUser (req: Request, res: Response) {
+      try {
+        return res.status(200).json(req.user)
+      } catch (error) {
+        console.log(error)
+      }
+    }
 }
