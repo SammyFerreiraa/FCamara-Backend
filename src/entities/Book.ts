@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { Copy } from "./Copy";
 
@@ -17,8 +17,12 @@ export class Book {
   isbn: string
 
   @OneToOne(() => Copy)
+  @JoinColumn()
   copy: Copy
 
-  @ManyToOne(() => User, (user) => user.books)
+  @ManyToOne(() => User, (user) => user.books, {
+    eager: false
+  })
+  @JoinColumn()
   user: User
 }
