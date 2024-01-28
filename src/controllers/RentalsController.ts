@@ -12,13 +12,12 @@ export class RentalsController {
       
       const book = await BooksRepository.findOne({ where: { id: bookId } })
       if (!book) return res.status(400).json({ message: 'Book not found' })
-
-      if (book.copies.length <= 0) return res.status(400).json({ message: 'Book not available' })
-  
-      const copy = book.copies.find(copy => copy.available === true)
+      
+      if (req.user.books?.find(userBook => userBook.isbn === book.isbn)) return res.status(400).json({ message: 'You already have this book' })
+      
+      const copy = await CopyRepository.findOne({ where: { book, available: true } })
       if (!copy) return res.status(400).json({ message: 'Book not available' })
 
-      if (req.user.books?.find(userBook => userBook.isbn === book.isbn)) return res.status(400).json({ message: 'You already have this book' })
   
       copy.available = false
       await CopyRepository.save(copy)
