@@ -10,9 +10,7 @@ export class Copy {
   @Column()
   available: boolean
 
-  @ManyToOne(() => Books, (books) => books.copies, {
-    cascade: true
-  })
+  @ManyToOne(() => Books, (books) => books.copies)
   book: Books
 
   @OneToMany(() => Rental, (rental) => rental.copy)
