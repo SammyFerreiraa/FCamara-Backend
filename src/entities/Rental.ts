@@ -20,7 +20,7 @@ export class Rental {
   @Column()
   delay: number
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
   user: User
 }
