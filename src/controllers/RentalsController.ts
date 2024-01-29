@@ -26,8 +26,6 @@ export class RentalsController {
         copy,
         user: req.user,
         rentedAt: new Date(),
-        returnedAt: new Date(),
-        delay: 0
       })
       await RentalRepository.save(rental)
 

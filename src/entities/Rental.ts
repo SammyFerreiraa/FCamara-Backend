@@ -14,10 +14,14 @@ export class Rental {
   @Column()
   rentedAt: Date
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   returnedAt: Date
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   delay: number
 
   @ManyToOne(() => User)
