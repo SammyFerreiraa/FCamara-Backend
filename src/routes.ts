@@ -10,6 +10,7 @@ const routes = Router()
 
 routes.post('/users', new UserController().create)
 routes.get('/users', authMiddleware, new UserController().getUser)
+routes.put('/users', authMiddleware, new UserController().updateUser)
 
 routes.post('/login', new LoginController().login)
 

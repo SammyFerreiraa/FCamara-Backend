@@ -34,4 +34,25 @@ export class UserController {
         console.log(error)
       }
     }
+
+    async updateUser (req: Request, res: Response) {
+      try {
+        const { name, email, address, city, password } = req.body
+        const user = req.user
+
+        const hashedPassword = await bcrypt.hash(password, 10)
+        
+        user.name = name
+        user.email = email
+        user.address = address
+        user.city = city
+        user.password = hashedPassword
+
+        await UserRepository.save(user)
+
+        return res.status(200).json({'message': 'User updated'})
+      } catch (error) {
+        console.log(error)
+      }
+    }
 }
