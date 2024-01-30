@@ -7,7 +7,7 @@ export class Rental {
   @PrimaryGeneratedColumn('uuid')
   id: number
 
-  @ManyToOne(() => Copy, (copy) => copy.rentals)
+  @ManyToOne(() => Copy)
   @JoinColumn()
   copy: Copy
 

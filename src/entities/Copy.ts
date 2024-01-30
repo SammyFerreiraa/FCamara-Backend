@@ -12,7 +12,4 @@ export class Copy {
 
   @ManyToOne(() => Books, (books) => books.copies)
   book: Books
-
-  @OneToMany(() => Rental, (rental) => rental.copy)
-  rentals: Rental
 }

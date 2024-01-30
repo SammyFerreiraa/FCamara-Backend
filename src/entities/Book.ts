@@ -21,7 +21,7 @@ export class Book {
   copy: Copy
 
   @ManyToOne(() => User, (user) => user.books, {
-    eager: false
+    eager: false,
   })
   @JoinColumn()
   user: User
