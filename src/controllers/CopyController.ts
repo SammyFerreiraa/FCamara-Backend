@@ -17,4 +17,9 @@ export class CopyController {
 
     return res.status(201).json({"message": "Copy created", copy})
   }
+
+  async listAll(req: Request, res: Response) {
+    const copies = await CopyRepository.find()
+    return res.status(200).json(copies)
+  }
 }
