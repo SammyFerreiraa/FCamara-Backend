@@ -18,8 +18,10 @@ routes.post('/login', new LoginController().login)
 routes.post('/books', authMiddleware, new BooksController().create)
 routes.get('/books', new BooksController().listAll)
 routes.put('/books/:id', authMiddleware, new BooksController().update)
+routes.delete('/books/:id', authMiddleware, new BooksController().delete)
 
 routes.post('/copies', new CopyController().create)
+routes.get('/copies', new CopyController().listAll)
 
 routes.post('/rentals', authMiddleware ,new RentalsController().create)
 
