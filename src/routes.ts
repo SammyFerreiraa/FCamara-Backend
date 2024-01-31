@@ -8,21 +8,21 @@ import { authMiddleware } from './middlewares/authMiddleware'
 
 const routes = Router()
 
-routes.post('/users', new UserController().create)
-routes.get('/users', authMiddleware, new UserController().getUser)
-routes.put('/users', authMiddleware, new UserController().updateUser)
-routes.delete('/users', authMiddleware, new UserController().deleteUser)
+routes.post('/login', new LoginController().login) // Login route
 
-routes.post('/login', new LoginController().login)
+routes.post('/users', new UserController().create) // Create user
+routes.get('/users', authMiddleware, new UserController().getUser) // Get user
+routes.put('/users', authMiddleware, new UserController().updateUser) // Update user
+routes.delete('/users', authMiddleware, new UserController().deleteUser) // Delete user
 
-routes.post('/books', authMiddleware, new BooksController().create)
-routes.get('/books', new BooksController().listAll)
-routes.put('/books/:id', authMiddleware, new BooksController().update)
-routes.delete('/books/:id', authMiddleware, new BooksController().delete)
+routes.post('/books', authMiddleware, new BooksController().create) // Create book
+routes.get('/books', new BooksController().listAll) // List all books
+routes.put('/books/:id', authMiddleware, new BooksController().update) // Update book
+routes.delete('/books/:id', authMiddleware, new BooksController().delete) // Delete book
 
-routes.post('/copies', new CopyController().create)
-routes.get('/copies', new CopyController().listAll)
+routes.post('/copies', authMiddleware, new CopyController().create) // Create copy
+routes.get('/copies', new CopyController().listAll) // List all copies
 
-routes.post('/rentals', authMiddleware ,new RentalsController().create)
+routes.post('/rentals', authMiddleware ,new RentalsController().create) // Create rental
 
 export default routes
