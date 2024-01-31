@@ -10,6 +10,8 @@ export class Copy {
   @Column()
   available: boolean
 
-  @ManyToOne(() => Books, (books) => books.copies)
+  @ManyToOne(() => Books, (books) => books.copies, {
+    eager: true
+  })
   book: Books
 }

@@ -16,6 +16,8 @@ export class Books {
   @Column()
   isbn: string
 
-  @OneToMany(() => Copy, (copy) => copy.book)
+  @OneToMany(() => Copy, (copy) => copy.book, {
+    cascade: true
+  })
   copies: Copy[]
 }
