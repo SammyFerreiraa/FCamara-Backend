@@ -15,8 +15,9 @@ routes.delete('/users', authMiddleware, new UserController().deleteUser)
 
 routes.post('/login', new LoginController().login)
 
-routes.post('/books', new BooksController().create)
-routes.get('/books', new BooksController().list)
+routes.post('/books', authMiddleware, new BooksController().create)
+routes.get('/books', new BooksController().listAll)
+routes.put('/books/:id', authMiddleware, new BooksController().update)
 
 routes.post('/copies', new CopyController().create)
 

@@ -19,8 +19,27 @@ export class BooksController {
     return res.status(201).json(book)
   }
 
-  async list(req: Request, res: Response) {
+  async listAll(req: Request, res: Response) {
     const books = await BooksRepository.find()
     return res.status(200).json(books)
+  }
+
+  async update(req: Request, res: Response) {
+    try {
+      const { title, author, isbn } = req.body
+      const id = req.params.id
+  
+      const book = await BooksRepository.findOne({ where: { id } })
+      if (!book) return res.status(400).json({'message': 'Book not found'})
+  
+      book.title = title
+      book.author = author
+      book.isbn = isbn
+      await BooksRepository.save(book)
+  
+      return res.status(200).json(book)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
