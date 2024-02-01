@@ -16,7 +16,9 @@ export class Book {
   @Column()
   isbn: string
 
-  @OneToOne(() => Copy)
+  @OneToOne(() => Copy, {
+    eager: true
+  })
   @JoinColumn()
   copy: Copy
 

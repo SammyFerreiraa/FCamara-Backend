@@ -22,6 +22,7 @@ routes.delete('/books/:id', authMiddleware, new BooksController().delete) // Del
 
 routes.post('/copies', authMiddleware, new CopyController().create) // Create copy
 routes.get('/copies', new CopyController().listAll) // List all copies
+routes.delete('/copies/:id', authMiddleware, new CopyController().delete) // Delete copy
 
 routes.post('/rentals', authMiddleware ,new RentalsController().create) // Create rental
 

@@ -65,30 +65,24 @@ export class UserController {
         const user = await UserRepository.findOne({ where: { id: req.user.id } })
 
         if (!user) return res.status(400).json({'message': 'User not found'})
-        if (!user.books) return res.status(400).json({'message': 'User has no books'})
 
         for (const book of user.books) {
-          const bookCopy = await BookRepository.findOne({ where: { id: book.id } });
-          console.log(bookCopy)
+          const bookCopy = await BookRepository.findOne({ where: { id: book.id } })
+          if (!bookCopy) return res.status(400).json({'message': 'Book not found'})
 
-          const bookEntity = await BooksRepository.findOne({ where: { isbn: book.isbn } })
-          if (!bookEntity) return res.status(400).json({'message': 'Book not found'})
-    
-          if (bookCopy) {
-            const copy = await CopyRepository.findOne({ where: { book: bookEntity } })
-            if (!copy) return res.status(400).json({'message': 'Copy not found'})
-
-            const rental = await RentalRepository.findOne({ where: { copy, user } })
-            if (!rental) return res.status(400).json({'message': 'User has no rental'})
-
-            copy.available = true
-            
-            await CopyRepository.save(copy);
-            await RentalRepository.remove(rental)
-            await BookRepository.remove(bookCopy);
-          }
-        }
+          const copy = await CopyRepository.findOne({ where: { id: bookCopy.copy.id } })
+          if (!copy) return res.status(400).json({'message': 'Copy not found'})
         
+          const rental = await RentalRepository.findOne({ where: { copy: book.copy, user } })
+          if (!rental) return res.status(400).json({'message': 'User has no rental'})
+
+          book.copy.available = true
+          
+          await CopyRepository.save(book.copy);
+          await RentalRepository.remove(rental)
+          await BookRepository.remove(book);
+        }
+
         await UserRepository.remove(user)
 
         return res.status(200).json({'message': 'User deleted'})
