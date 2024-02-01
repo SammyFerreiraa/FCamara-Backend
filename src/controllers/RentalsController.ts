@@ -43,4 +43,32 @@ export class RentalsController {
       console.log(error)
     }
   }
+
+  async returnBook(req: Request, res: Response) {
+    try {
+      const { id } = req.params
+
+      const book = await BookRepository.findOne({ where: { id } })
+      if (!book) return res.status(400).json({ message: 'Book not found' })
+
+      const copy = await CopyRepository.findOne({ where: { id: book.copy.id } })
+      if (!copy) return res.status(400).json({ message: 'Copy not found' })
+
+      const rental = await RentalRepository.findOne({ where: { copy, user: req.user } })
+      if (!rental) return res.status(400).json({ message: 'Rental not found' })
+
+      rental.returnedAt = new Date()
+      
+      copy.available = true
+      await CopyRepository.save(copy)
+
+      await RentalRepository.save(rental)
+
+      await BookRepository.remove(book)
+
+      res.status(200).json({ message: 'Book returned' })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }

@@ -25,5 +25,6 @@ routes.get('/copies', new CopyController().listAll) // List all copies
 routes.delete('/copies/:id', authMiddleware, new CopyController().delete) // Delete copy
 
 routes.post('/rentals', authMiddleware ,new RentalsController().create) // Create rental
+routes.delete('/rentals/:id', authMiddleware, new RentalsController().returnBook) // Return book
 
 export default routes
