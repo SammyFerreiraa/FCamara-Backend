@@ -1,4 +1,8 @@
+# FCamara Backend
+
 Stack: NodeJS, Express, PostgresSQL
+
+![Screenshot](.github/screenshot.png)
 
 ## Requisitos Funcionais
 - [X] Autenticação JWT
@@ -21,4 +25,3 @@ Stack: NodeJS, Express, PostgresSQL
 - [X] Segurança
 - [X] Desempenho
 - [X] Boas práticas
-
