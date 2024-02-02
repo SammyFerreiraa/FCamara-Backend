@@ -21,6 +21,9 @@ export class User {
   @Column()
   city: string
 
+  @Column()
+  delays: number
+
   @OneToMany(() => Book, (book) => book.user, {
     eager: true
   })
