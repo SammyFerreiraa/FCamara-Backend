@@ -25,7 +25,7 @@ export class RentalsController {
   
       copy.available = false
       await CopyRepository.save(copy)
-  
+
       const rental = RentalRepository.create({
         copy,
         user: req.user,
@@ -38,6 +38,7 @@ export class RentalsController {
         author: book.author,
         isbn: book.isbn,
         copy,
+        rental,
         user: req.user
       })
       await BookRepository.save(bookToSave)
@@ -64,9 +65,11 @@ export class RentalsController {
       const copy = await CopyRepository.findOne({ where: { id: book.copy.id } })
       if (!copy) return res.status(400).json({ message: 'Copy not found' })
 
-      const rental = await RentalRepository.findOne({ where: { copy, user } })
+      const rental = await RentalRepository.findOne({ where: { id: book.rental.id } })
       if (!rental) return res.status(400).json({ message: 'Rental not found' })
+
       rental.returnedAt = new Date()
+      await RentalRepository.save(rental)
 
       const dataEntrega = moment(rental.rentedAt).add(7, 'days').format('L')
       const devolvido = moment(rental.returnedAt).format('L')

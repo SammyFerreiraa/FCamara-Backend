@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Copy } from "./Copy";
 import { User } from "./User";
+import { Book } from "./Book";
 
 @Entity("rentals")
 export class Rental {
@@ -23,6 +24,9 @@ export class Rental {
     nullable: true
   })
   delay: number
+
+  @OneToOne(() => Book)
+  book: Book
 
   @ManyToOne(() => User)
   @JoinColumn()

@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { Copy } from "./Copy";
+import { Rental } from "./Rental";
 
 @Entity('book')
 export class Book {
@@ -21,6 +22,12 @@ export class Book {
   })
   @JoinColumn()
   copy: Copy
+
+  @OneToOne(() => Rental, {
+    eager: true
+  })
+  @JoinColumn()
+  rental: Rental
 
   @ManyToOne(() => User, (user) => user.books, {
     eager: false,
