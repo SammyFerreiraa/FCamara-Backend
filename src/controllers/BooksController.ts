@@ -8,6 +8,8 @@ export class BooksController {
   async create(req: Request, res: Response) {
     const { title, author, isbn } = req.body
 
+    if (title === '' || author === '' || isbn === '') return res.status(400).json({'message': 'All fields are required'})
+
     const bookExists = await BooksRepository.findOne({ where: { isbn } })
     if (bookExists) return res.status(400).json({'message': 'Book already exists'})
 

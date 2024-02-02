@@ -11,6 +11,8 @@ export class UserController {
     try {
       const { name, email, address, city, password } = req.body
 
+      if (name === '' || email === '' || address === '' || city === '' || password === '') return res.status(400).json({'message': 'All fields are required'})
+
       const userExists = await UserRepository.findOne({ where: { email } })
       if (userExists) return res.status(400).json({'message': 'User already exists'})
 
