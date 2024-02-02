@@ -4,6 +4,7 @@ import { CopyRepository } from "../repositories/copyRepository"
 import { RentalRepository } from "../repositories/rentalRepository"
 import { BookRepository } from "../repositories/bookRepository"
 import { UserRepository } from "../repositories/userRepository"
+import moment from 'moment'
 
 export class RentalsController {
   async create(req: Request, res: Response) {
@@ -56,10 +57,19 @@ export class RentalsController {
 
       const rental = await RentalRepository.findOne({ where: { copy, user: req.user } })
       if (!rental) return res.status(400).json({ message: 'Rental not found' })
-
       rental.returnedAt = new Date()
+
+      const dataEntrega = moment(rental.rentedAt).add(7, 'days').format('L')
+      const devolvido = moment(rental.returnedAt).format('L')
+
+      if (moment(devolvido).isAfter(dataEntrega)) {
+        rental.delay = moment(devolvido).diff(dataEntrega, 'days')
+      } else {
+        rental.delay = 0
+      }
       
       copy.available = true
+
       await CopyRepository.save(copy)
 
       await RentalRepository.save(rental)
