@@ -21,6 +21,7 @@ export class UserController {
         email,
         address,
         city,
+        delays: 0,
         password: hashedPassword
       })
       await UserRepository.save(newUser)

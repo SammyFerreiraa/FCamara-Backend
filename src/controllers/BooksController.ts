@@ -15,6 +15,7 @@ export class BooksController {
       title,
       author,
       isbn,
+      delays: 0,
       copies: []
     })
     await BooksRepository.save(book)

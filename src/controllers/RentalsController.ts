@@ -10,6 +10,9 @@ export class RentalsController {
   async create(req: Request, res: Response) {
     try {
       const { bookId } = req.body
+
+      if (!req.user.delays) req.user.delays = 0
+      if (req.user.delays >= 3) return res.status(400).json({ message: 'You have too many delays' })
       
       const book = await BooksRepository.findOne({ where: { id: bookId } })
       if (!book) return res.status(400).json({ message: 'Book not found' })
@@ -49,13 +52,19 @@ export class RentalsController {
     try {
       const { id } = req.params
 
+      const user = await UserRepository.findOne({ where: { id: req.user.id } })
+      if (!user) return res.status(400).json({ message: 'User not found' })
+
       const book = await BookRepository.findOne({ where: { id } })
       if (!book) return res.status(400).json({ message: 'Book not found' })
+
+      const OficialBook = await BooksRepository.findOne({ where: { isbn: book.isbn } })
+      if (!OficialBook) return res.status(400).json({ message: 'Oficial Book not found' })
 
       const copy = await CopyRepository.findOne({ where: { id: book.copy.id } })
       if (!copy) return res.status(400).json({ message: 'Copy not found' })
 
-      const rental = await RentalRepository.findOne({ where: { copy, user: req.user } })
+      const rental = await RentalRepository.findOne({ where: { copy, user } })
       if (!rental) return res.status(400).json({ message: 'Rental not found' })
       rental.returnedAt = new Date()
 
@@ -64,17 +73,19 @@ export class RentalsController {
 
       if (moment(devolvido).isAfter(dataEntrega)) {
         rental.delay = moment(devolvido).diff(dataEntrega, 'days')
+        user.delays++
+        OficialBook.delays++
       } else {
         rental.delay = 0
       }
       
       copy.available = true
 
+      await BooksRepository.save(OficialBook)
       await CopyRepository.save(copy)
-
       await RentalRepository.save(rental)
-
       await BookRepository.remove(book)
+      await UserRepository.save(user)
 
       res.status(200).json({ message: 'Book returned' })
     } catch (error) {
