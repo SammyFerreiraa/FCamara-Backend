@@ -71,4 +71,14 @@ export class BooksController {
       console.log(error)
     }
   } 
+
+  async delayedBooks (req: Request, res: Response) {
+    try {
+      const books = await BooksRepository.find()
+      const delayedBooks = books.filter(book => book.delays > 0)
+      return res.status(200).json(delayedBooks)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }

@@ -27,4 +27,6 @@ routes.delete('/copies/:id', authMiddleware, new CopyController().delete) // Del
 routes.post('/rentals', authMiddleware ,new RentalsController().create) // Create rental
 routes.delete('/rentals/:id', authMiddleware, new RentalsController().returnBook) // Return book
 
+routes.get('/delay', authMiddleware, new BooksController().delayedBooks) // List all delayed books
+
 export default routes
