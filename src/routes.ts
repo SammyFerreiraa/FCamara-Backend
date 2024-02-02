@@ -8,25 +8,31 @@ import { authMiddleware } from './middlewares/authMiddleware'
 
 const routes = Router()
 
-routes.post('/login', new LoginController().login) // Login route
+const loginController = new LoginController()
+const userController = new UserController()
+const booksController = new BooksController()
+const copyController = new CopyController()
+const rentalsController = new RentalsController()
 
-routes.post('/users', new UserController().create) // Create user
-routes.get('/users', authMiddleware, new UserController().getUser) // Get user
-routes.put('/users', authMiddleware, new UserController().updateUser) // Update user
-routes.delete('/users', authMiddleware, new UserController().deleteUser) // Delete user
+routes.post('/login', loginController.login) // Login route
 
-routes.post('/books', authMiddleware, new BooksController().create) // Create book
-routes.get('/books', new BooksController().listAll) // List all books
-routes.put('/books/:id', authMiddleware, new BooksController().update) // Update book
-routes.delete('/books/:id', authMiddleware, new BooksController().delete) // Delete book
+routes.post('/users', userController.create) // Create user
+routes.get('/users', authMiddleware, userController.getUser) // Get user
+routes.put('/users', authMiddleware, userController.updateUser) // Update user
+routes.delete('/users', authMiddleware, userController.deleteUser) // Delete user
 
-routes.post('/copies', authMiddleware, new CopyController().create) // Create copy
-routes.get('/copies', new CopyController().listAll) // List all copies
-routes.delete('/copies/:id', authMiddleware, new CopyController().delete) // Delete copy
+routes.post('/books', authMiddleware, booksController.create) // Create book
+routes.get('/books', booksController.listAll) // List all books
+routes.put('/books/:id', authMiddleware, booksController.update) // Update book
+routes.delete('/books/:id', authMiddleware, booksController.delete) // Delete book
 
-routes.post('/rentals', authMiddleware ,new RentalsController().create) // Create rental
-routes.delete('/rentals/:id', authMiddleware, new RentalsController().returnBook) // Return book
+routes.post('/copies', authMiddleware, copyController.create) // Create copy
+routes.get('/copies', copyController.listAll) // List all copies
+routes.delete('/copies/:id', authMiddleware, copyController.delete) // Delete copy
 
-routes.get('/delay', authMiddleware, new BooksController().delayedBooks) // List all delayed books
+routes.post('/rentals', authMiddleware ,rentalsController.create) // Create rental
+routes.delete('/rentals/:id', authMiddleware, rentalsController.returnBook) // Return book
+
+routes.get('/delay', authMiddleware, booksController.delayedBooks) // List all delayed books
 
 export default routes
