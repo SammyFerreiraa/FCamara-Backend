@@ -93,4 +93,16 @@ export class UserController {
         console.log(error)
       }
     }
+
+    async getByEmail (req: Request, res: Response) {
+      try {
+        const { email } = req.body
+        const user = await UserRepository.findOne({ where: { email } })
+        if (!user) return res.status(400).json({'message': 'User not found'})
+
+        return res.status(200).json({ name: user?.name, email })
+      } catch (error) {
+        console.log(error)
+      }
+    }
 }

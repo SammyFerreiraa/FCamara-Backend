@@ -16,6 +16,7 @@ const rentalsController = new RentalsController()
 
 routes.post('/login', loginController.login) // Login route
 routes.post('/register', userController.create) // Create user
+routes.post('/infos', userController.getByEmail) // Get user by email
 
 routes.use('/users', authMiddleware) // Middleware to protect routes
 routes.get('/users', userController.getUser) // Get user
