@@ -15,6 +15,9 @@ export class Book {
   author: string
 
   @Column()
+  image: string
+
+  @Column()
   isbn: string
 
   @OneToOne(() => Copy, {

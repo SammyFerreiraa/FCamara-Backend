@@ -11,6 +11,12 @@ export class Books {
   title: string
 
   @Column()
+  image: string
+
+  @Column({ default: false })
+  recommended: boolean
+
+  @Column()
   author: string
 
   @Column()
