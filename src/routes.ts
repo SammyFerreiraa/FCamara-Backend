@@ -23,11 +23,14 @@ routes.get('/users', userController.getUser) // Get user
 routes.put('/users', userController.updateUser) // Update user
 routes.delete('/users', userController.deleteUser) // Delete user
 
+
 routes.use('/books', authMiddleware) // Middleware to protect routes
 routes.post('/books', booksController.create) // Create book
 routes.get('/books', booksController.listAll) // List all books
 routes.put('/books/:id', booksController.update) // Update book
 routes.delete('/books/:id', booksController.delete) // Delete book
+
+routes.get('/library', authMiddleware, booksController.getLibrary) // Get library
 
 routes.use('/copies', authMiddleware) // Middleware to protect routes
 routes.post('/copies', copyController.create) // Create copy

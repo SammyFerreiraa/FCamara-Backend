@@ -89,4 +89,12 @@ export class BooksController {
       console.log(error)
     }
   }
+
+  async getLibrary (req: Request, res: Response) {
+    try {
+      return res.status(200).json(req.user.books)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
