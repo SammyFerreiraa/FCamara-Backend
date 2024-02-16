@@ -97,4 +97,13 @@ export class RentalsController {
       console.log(error)
     }
   }
+
+  async getRentals (req: Request, res: Response) {
+    const { id } = req.params
+
+    const rentals = await RentalRepository.find({ where: { user: { id } } })
+    if (!rentals) return res.status(400).json({ message: 'Rentals not found' })
+    
+    return res.status(200).json(rentals)
+  }
 }

@@ -40,6 +40,7 @@ routes.delete('/copies/:id', copyController.delete) // Delete copy
 routes.use('/rentals', authMiddleware) // Middleware to protect routes
 routes.post('/rentals' ,rentalsController.create) // Create rental
 routes.delete('/rentals/:id', rentalsController.returnBook) // Return book
+routes.get('/rentals/:id', rentalsController.getRentals) // List all rentals
 
 routes.use('/delay', authMiddleware) // Middleware to protect routes
 routes.get('/delay', booksController.delayedBooks) // List all delayed books
