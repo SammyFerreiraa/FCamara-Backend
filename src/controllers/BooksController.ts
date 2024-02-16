@@ -6,15 +6,16 @@ import { RentalRepository } from "../repositories/rentalRepository"
 
 export class BooksController {
   async create(req: Request, res: Response) {
-    const { title, author, isbn, image, recommended } = req.body
+    const { title, author, isbn, image, recommended, category } = req.body
 
-    if (title === '' || author === '' || isbn === '' || image === '') return res.status(400).json({'message': 'All fields are required'})
+    if (title === '' || author === '' || isbn === '' || image === '' || category === '') return res.status(400).json({'message': 'All fields are required'})
 
     const bookExists = await BooksRepository.findOne({ where: { isbn } })
     if (bookExists) return res.status(400).json({'message': 'Book already exists'})
 
     const book = BooksRepository.create({
       title,
+      category,
       recommended,
       image,
       author,
@@ -34,12 +35,13 @@ export class BooksController {
 
   async update(req: Request, res: Response) {
     try {
-      const { title, author, isbn, image, recommended } = req.body
+      const { title, author, isbn, image, recommended, category } = req.body
       const id = req.params.id
   
       const book = await BooksRepository.findOne({ where: { id } })
       if (!book) return res.status(400).json({'message': 'Book not found'})
-  
+
+      book.category = category
       book.recommended = recommended
       book.image = image
       book.title = title

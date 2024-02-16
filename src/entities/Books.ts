@@ -13,6 +13,9 @@ export class Books {
   @Column()
   image: string
 
+  @Column({nullable: true})
+  category: string
+
   @Column({ default: false })
   recommended: boolean
 

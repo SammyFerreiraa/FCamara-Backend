@@ -34,6 +34,7 @@ export class RentalsController {
       await RentalRepository.save(rental)
 
       const bookToSave = BookRepository.create({
+        category: book.category,
         image: book.image,
         title: book.title,
         author: book.author,

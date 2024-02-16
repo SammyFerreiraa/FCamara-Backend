@@ -15,6 +15,9 @@ export class Book {
   author: string
 
   @Column()
+  category: string
+
+  @Column()
   image: string
 
   @Column()
