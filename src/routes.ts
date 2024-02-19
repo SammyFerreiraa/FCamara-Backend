@@ -5,6 +5,7 @@ import { BooksController } from './controllers/BooksController'
 import { CopyController } from './controllers/CopyController'
 import { RentalsController } from './controllers/RentalsController'
 import { authMiddleware } from './middlewares/authMiddleware'
+import { FavoritesController } from './controllers/FavoritesController'
 
 const routes = Router()
 
@@ -13,6 +14,7 @@ const userController = new UserController()
 const booksController = new BooksController()
 const copyController = new CopyController()
 const rentalsController = new RentalsController()
+const favoritesController = new FavoritesController()
 
 routes.post('/login', loginController.login) // Login route
 routes.post('/register', userController.create) // Create user
@@ -41,6 +43,10 @@ routes.use('/rentals', authMiddleware) // Middleware to protect routes
 routes.post('/rentals' ,rentalsController.create) // Create rental
 routes.delete('/rentals/:id', rentalsController.returnBook) // Return book
 routes.get('/rentals/:id', rentalsController.getRentals) // List all rentals
+
+routes.use('/favorites', authMiddleware) // Middleware to protect routes
+routes.post('/favorites', favoritesController.add ) // Add favorites
+routes.delete('/favorites', favoritesController.remove) // Remove favorite
 
 routes.use('/delay', authMiddleware) // Middleware to protect routes
 routes.get('/delay', booksController.delayedBooks) // List all delayed books

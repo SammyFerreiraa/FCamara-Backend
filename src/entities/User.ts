@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Book } from "./Book";
+import { Favorites } from "./Favorites";
 
 @Entity("users")
 export class User {
@@ -28,4 +29,9 @@ export class User {
     eager: true
   })
   books: Book[]
+
+  @OneToMany(() => Favorites, (favorite) => favorite.user, {
+    eager: true
+  })
+  favorites: Book[]
 }
