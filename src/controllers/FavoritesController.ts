@@ -8,7 +8,7 @@ export class FavoritesController {
       const { bookId } = req.body
       const book = await BooksRepository.findOne({ where: { id: bookId } })
       if (!book) return res.status(400).json({ message: 'Book not found' })
-      const fav = await FavoriteRepository.findOne({ where: { isbn: book.isbn } })
+      const fav = await FavoriteRepository.findOne({ where: { isbn: book.isbn, user: req.user } })
       if (fav) return res.status(400).json({ message: 'Favorite already exists' })
       const favorite = FavoriteRepository.create({
         author: book.author,
