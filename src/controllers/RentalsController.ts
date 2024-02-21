@@ -45,7 +45,17 @@ export class RentalsController {
       })
       await BookRepository.save(bookToSave)
 
-      return res.status(201).json({ message: 'Rental created', rental })
+      return res.status(201).json({ 
+        rental: {
+          id: bookToSave.id,
+          title: bookToSave.title,
+          category: bookToSave.category,
+          author: bookToSave.author,
+          image: bookToSave.image,
+          isbn: bookToSave.isbn,
+          copy,
+          rental,
+      } })
     } catch (error) {
       console.log(error)
     }
