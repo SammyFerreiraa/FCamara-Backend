@@ -20,7 +20,7 @@ export class RentalsController {
       if (req.user.books?.find(userBook => userBook.isbn === book.isbn)) return res.status(400).json({ message: 'You already have this book' })
       
       const copy = await CopyRepository.findOne({ where: { book, available: true } })
-      if (!copy) return res.status(400).json({ message: 'Book not available' })
+      if (!copy) return res.status(433).json({ message: 'Book not available' })
 
   
       copy.available = false
